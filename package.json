@@ -1,0 +1,29 @@
+{
+  "name": "tatti-appi",
+  "main": "server.js",
+  "description": "IBM Cloud based PWA",
+  "version": "0.1.1",
+  "private": false,
+  "engines": {
+    "node": "8.*",
+    "npm": "5.*"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/esony/tatti-appi.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.x",
+    "cfenv": "^1.0.x",
+    "cloudant": "^1.7.x",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.x",
+    "express-fileupload": "^0.4.0",
+    "watson-developer-cloud": "^3.3.0"
+  },
+  "author": "Mikael Eriksson",
+  "license": "Apache-2.0"
+}

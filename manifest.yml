@@ -1,0 +1,5 @@
+---
+applications:
+ - name: tatti-appi
+   random-route: false
+   memory: 256M

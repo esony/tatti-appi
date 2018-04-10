@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>TattiAppi</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css">
+  </head>
+  <body>
+    <div id="camera">
+      <video id="video" muted playsinline autoplay="autoplay">Video</video>
+      <img id="img">
+    </div>
+    <div id="info" class="info info-fadeOut">
+      <div class="info-wrapper">
+        <h1>This is Tatti-Appi</h1>
+        <h4>We send pictures to the interwebs!</h4><br>
+        <div class="infoText">
+          <p>Take a picture and click send. Your picture will be sent to IBM Cloud, 
+            where the Watson Visual Recognition service will try to figure out what the hell you took a picture of. 
+            After a while, you might get some interesting data in return.</p>
+          </div>
+        </div>
+    </div>
+    <div id="responseBox" class="info info-fadeOut">
+      <div class="info-wrapper">      
+        <h1>Tatti-Server:</h1>
+        <div id="responseText"></div>
+        <div id="responseButton">
+          <button onclick="toggleResponse()">OK</button>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div id="cameraButton">
+        <i class="fas fa-camera"></i>
+      </div>
+      <div id="button-bar">
+        <input type="button" class="btn" id="buttonSnap" value="Send" onclick="sendPhoto()" />
+        <input type="button" class="btn" id="buttonStart" value="New" onclick="clearCanvas()" />
+      </div>
+    </div>
+    <i id="infoButton" onclick="showInfo()" class="fas fa-info-circle"></i>
+  </body>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</html>
