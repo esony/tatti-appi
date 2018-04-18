@@ -35,12 +35,18 @@ h1 {
   width: 100vw;
 }
 
+#startScreen {
+  color: #3498db;
+  margin-bottom: 3em;
+}
+
 #cameraButton {
+  display: none;
   line-height: 1.5em;
   height: 1.5em;
   width: 1.5em;
-  background-color: rgb(0, 114, 180);
-  color: lightgray;
+  background-color: #3498db;
+  color: white;
   font-size: 4em;
   -webkit-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.75);
@@ -100,13 +106,13 @@ h1 {
 
   left: 50%;
   top: 50%;
-  margin-top: -200px;
-  margin-left: -150px;
+  margin-top: -220px;
+  margin-left: -160px;
   background: #cccccc;
   border-radius: 10px;
   overflow-wrap: break-word;
   
-  background-color: rgb(0, 114, 180);
+  background-color: #3498db;
   color: #ffffff;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
   letter-spacing: 0.8px;
@@ -180,7 +186,7 @@ h1 {
 }
 
 #infoButton {
-  color: rgb(0, 114, 180);
+  color: #3498db;
   position: fixed;
   background: white;
   border: 1px solid white;
@@ -196,4 +202,28 @@ h1 {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+
+#canvas {
+  display: none;
+}
+
+#loader {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left: -76px;
+  margin-top: -76px;
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

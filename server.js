@@ -5,7 +5,7 @@ var fs = require('fs');
 var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
 
 const API_URL = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify";
-const API_KEY = "f9e1e714e91d7246ae344f34e8d0d096c09bef13";
+const API_KEY = process.env.API_KEY;
 const API_VERSION = "2016-05-20";
 var COUNTER = 0;
 
@@ -38,41 +38,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.post('/upload', function(req, res) {
-	/*
-	var asd = [
-		{
-			"class": "toothbrush",
-			"score": 0.735,
-			"type_hierarchy": "/toiletry/toothbrush"
-		},
-		{
-			"class": "toiletry",
-			"score": 0.735
-		},
-		{
-			"class": "spark plug",
-			"score": 0.5,
-			"type_hierarchy": "/electrical device/spark plug"
-		},
-		{
-			"class": "electrical device",
-			"score": 0.5
-		},
-		{
-			"class": "beverage",
-			"score": 0.586
-		},
-		{
-			"class": "ultramarine color",
-			"score": 0.794
-		},
-		{
-			"class": "jade green color",
-			"score": 0.568
-		}
-	]
-	res.send(asd)
-	*/
+
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
 		

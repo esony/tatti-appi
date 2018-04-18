@@ -5,8 +5,10 @@ var videoStream = null;
 var preLog = document.getElementById("preLog");
 var cameraButton = document.getElementById("cameraButton");
 var buttonBar = document.getElementById("button-bar");
+var canvas = document.getElementById("canvas");
 var imageCapture = null;
 var image = null;
+var loadingSpinner = document.getElementById("loader");
 
 function log(text)
 {
@@ -24,14 +26,19 @@ function clearCanvas() {
 // Stop video
 // video.srcObject.getVideoTracks().forEach(track => track.stop());
 
-function gotMedia(mediaStream) {
-  const mediaStreamTrack = mediaStream.getVideoTracks()[0];
+function gotMedia() {
+  const mediaStreamTrack = videoStream.getVideoTracks()[0];
 
-  video.srcObject = mediaStream;
+  video.srcObject = videoStream;
   video.onloadedmetadata = function(e) {
     video.play();
   };
-  imageCapture = new ImageCapture(mediaStreamTrack);
+  cameraButton.style.display = "block";
+  document.getElementById("startScreen").style.display = "none";
+
+  if (typeof(ImageCapture) !== "undefined") {
+    imageCapture = new ImageCapture(mediaStreamTrack);
+  }
 }
 
 function takePhoto() {
@@ -39,9 +46,12 @@ function takePhoto() {
     imageHeight: window.innerHeight,
     imageWidth: window.innerWidth
   }
+  
+  if (!imageCapture) capturePhoto()
+  else {
   imageCapture.takePhoto()
     .then(blob => {
-      image = blob
+      image = blob;
       img.src = URL.createObjectURL(blob);
       img.style.display = 'block';
       video.style.display = 'none';
@@ -49,25 +59,46 @@ function takePhoto() {
       buttonBar.style.display = 'block';
     })
     .catch(error => console.error('takePhoto() error:', error));
+  }
+}
+
+function capturePhoto() {
+  var context = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  context.drawImage(video, 0, 0, window.innerWidth, window.innerHeight);
+
+  canvas.toBlob(function(blob) {
+    image = blob;
+    img.src = URL.createObjectURL(blob);
+  }, "image/jpeg");
+
+  img.style.display = 'block';
+  video.style.display = 'none';
+  cameraButton.style.display = 'none';
+  buttonBar.style.display = 'block';
 }
 
 function sendPhoto() {
-    var formData = new FormData();
-    formData.append("image", image);
-    $.ajax({
-       url: `${location.origin}/upload`,
-       type: "POST",
-       data: formData,
-       processData: false,
-       contentType: false,
-       success: function(response) {
-           showResponse(response);
-       },
-       error: function(jqXHR, textStatus, errorMessage) {
-           console.log(errorMessage); // Optional
-           alert(`Photo NOT sent to Cloud! \n${textStatus}`);
-       }
-    });
+  loadingSpinner.style.display = "block";
+  var formData = new FormData();
+  formData.append("image", image);
+  $.ajax({
+      url: `${location.origin}/upload`,
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(response) {
+          loadingSpinner.style.display = "none";
+          showResponse(response);
+      },
+      error: function(jqXHR, textStatus, errorMessage) {
+          loadingSpinner.style.display = "none";        
+          console.log(errorMessage); // Optional
+          alert(`Photo NOT sent to Cloud! \n${textStatus}`);
+      }
+  });
 }
 
 function showInfo() {
@@ -112,10 +143,9 @@ function start()
     // Here, we will just add the getUserMedia property if it's missing.
     if (navigator.mediaDevices.getUserMedia === undefined) {
       navigator.mediaDevices.getUserMedia = function(constraints) {
-
         // First get ahold of the legacy getUserMedia, if present
         var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
+        
         // Some browsers just don't implement it - return a rejected promise with an error
         // to keep a consistent interface
         if (!getUserMedia) {
@@ -130,12 +160,11 @@ function start()
     }
 
     if (navigator.mediaDevices.getUserMedia) {
-    var constraints = { video: { height: window.innerHeight, width: window.innerWidth, facingMode: 'environment' } }; 
+    var constraints = { video: {facingMode: "environment"} };
     navigator.mediaDevices.getUserMedia(constraints)
-    .then(gotMedia)
-    .catch(error => console.error('getUserMedia() error:', error));
+      .then(stream => videoStream = stream)
+      .catch(error => alert('getUserMedia() error: ' + error.message));
     }
-
     cameraButton.addEventListener("mouseup", function() {
       takePhoto();
     });

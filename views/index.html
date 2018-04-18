@@ -12,7 +12,7 @@
   </head>
   <body>
     <div id="camera">
-      <video id="video" muted playsinline autoplay="autoplay">Video</video>
+      <video id="video" autoplay="autoplay" muted playsinline></video>
       <img id="img">
     </div>
     <div id="info" class="info info-fadeOut">
@@ -26,6 +26,7 @@
           </div>
         </div>
     </div>
+    <div id="loader"></div>
     <div id="responseBox" class="info info-fadeOut">
       <div class="info-wrapper">      
         <h1>Tatti-Server:</h1>
@@ -36,6 +37,10 @@
       </div>
     </div>
     <div class="content">
+      <div id="startScreen">
+        <p>Click Start button to fire up your camera</p>
+        <button class="btn" id="startButton" onclick="gotMedia()">Start</button>
+      </div>
       <div id="cameraButton">
         <i class="fas fa-camera"></i>
       </div>
@@ -45,6 +50,8 @@
       </div>
     </div>
     <i id="infoButton" onclick="showInfo()" class="fas fa-info-circle"></i>
+    <canvas id="canvas">
+      </canvas>
   </body>
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
