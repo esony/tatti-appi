@@ -84,19 +84,19 @@ function sendPhoto() {
   var formData = new FormData();
   formData.append("image", image);
   $.ajax({
-      url: `${location.origin}/upload`,
-      type: "POST",
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function(response) {
-          loadingSpinner.style.display = "none";
-          showResponse(response);
-      },
-      error: function(jqXHR, textStatus, errorMessage) {
-          loadingSpinner.style.display = "none";        
-          console.log(errorMessage); // Optional
-          alert(`Photo NOT sent to Cloud! \n${textStatus}`);
+    url: `${location.origin}/upload`,
+    type: "POST",
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+      loadingSpinner.style.display = "none";
+      showResponse(response);
+    },
+    error: function(jqXHR, textStatus, errorMessage) {
+      loadingSpinner.style.display = "none";        
+      console.log(errorMessage); // Optional
+      alert(`Photo NOT sent to Cloud! \n${textStatus}`);
       }
   });
 }
