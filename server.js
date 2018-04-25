@@ -3,6 +3,7 @@ var express = require('express');
 var fileUpload = require('express-fileupload');
 var fs = require('fs');
 var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
+require('dotenv').load();
 
 const API_URL = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify";
 const API_KEY = process.env.API_KEY;
@@ -11,7 +12,6 @@ var COUNTER = 0;
 
 var app = express();
 app.use(fileUpload());
-require('dotenv').load();
 
 // Determine port to listen on
 var port = (process.env.PORT || process.env.VCAP_APP_PORT || 3000);
@@ -72,7 +72,7 @@ app.post('/upload', function(req, res) {
 		visualRecognition.classify(params, function(err, response) {
 			if (err) {
 				console.log(err);
-				res.send('Watson has a problum')
+				res.status(err.code).send('Sorry, Watson has a problum')
 			}
 			else {
 				response = response.images[0].classifiers[0].classes;

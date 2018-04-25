@@ -9,6 +9,8 @@ var canvas = document.getElementById("canvas");
 var imageCapture = null;
 var image = null;
 var loadingSpinner = document.getElementById("loader");
+var infoBox = document.getElementById("info");
+
 
 function log(text)
 {
@@ -26,9 +28,12 @@ function clearCanvas() {
 // Stop video
 // video.srcObject.getVideoTracks().forEach(track => track.stop());
 
-function gotMedia() {
+function gotMedia(stream) {
+  videoStream = stream
+  showInfo()
+  document.getElementById("infoButton").style.visibility = "visible";
+  
   const mediaStreamTrack = videoStream.getVideoTracks()[0];
-
   video.srcObject = videoStream;
   video.onloadedmetadata = function(e) {
     video.play();
@@ -58,7 +63,7 @@ function takePhoto() {
       cameraButton.style.display = 'none';
       buttonBar.style.display = 'block';
     })
-    .catch(error => console.error('takePhoto() error:', error));
+    .catch(error => alert('Error when taking photo: ' + error));
   }
 }
 
@@ -94,17 +99,16 @@ function sendPhoto() {
       showResponse(response);
     },
     error: function(jqXHR, textStatus, errorMessage) {
-      loadingSpinner.style.display = "none";        
-      console.log(errorMessage); // Optional
-      alert(`Photo NOT sent to Cloud! \n${textStatus}`);
-      }
+      loadingSpinner.style.display = "none";
+      var message = jqXHR.responseText || "Sorry, we had a problum"
+      errorResponse(message);
+    }
   });
 }
 
 function showInfo() {
-  var infoButton = document.getElementById("info");
-  infoButton.classList.toggle("info-fadeOut");
-  infoButton.classList.toggle("info-fadeIn");
+  infoBox.classList.toggle("info-fadeOut");
+  infoBox.classList.toggle("info-fadeIn");
 }
 
 function showResponse(response) {
@@ -119,6 +123,12 @@ function showResponse(response) {
   })
   
   responseText.innerHTML = classes;
+  toggleResponse();
+}
+
+function errorResponse(message) {
+  var responseText = document.getElementById("responseText").innerHTML =
+  `<div>${message}</div>`;
   toggleResponse();
 }
 
@@ -162,7 +172,7 @@ function start()
     if (navigator.mediaDevices.getUserMedia) {
     var constraints = { video: {facingMode: "environment"} };
     navigator.mediaDevices.getUserMedia(constraints)
-      .then(stream => videoStream = stream)
+      .then(gotMedia)
       .catch(error => alert('getUserMedia() error: ' + error.message));
     }
     cameraButton.addEventListener("mouseup", function() {
@@ -170,5 +180,3 @@ function start()
     });
 	}
 }
-
-start();

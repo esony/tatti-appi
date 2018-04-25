@@ -5,6 +5,7 @@ body {
   position: fixed;
   height: 100%;
   width: 100%;
+  background-color: #3498db;
 }
 
 h1 {
@@ -36,8 +37,12 @@ h1 {
 }
 
 #startScreen {
-  color: #3498db;
-  margin-bottom: 3em;
+  text-align: center;
+  margin-top: 3em;
+}
+#startButton {
+  border: 1px solid white;  
+  z-index: 100;
 }
 
 #cameraButton {
@@ -50,7 +55,8 @@ h1 {
   font-size: 4em;
   -webkit-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.75);  
+  box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.75);
+  border: 1.5px solid white;
   border-radius: 2em;
   margin: 0.5em auto;
   cursor: pointer;
@@ -71,7 +77,6 @@ h1 {
   box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.75);  
   margin: 0.525em auto;
   font-size: 3.9em;
-
 }
 
 #button-bar {
@@ -86,16 +91,27 @@ h1 {
   font-size: 18px;
   padding: 10px;
   border: none;
-  background: #000;
+  background-color: #3498db;  
   color: #fff;
-  cursor: hand;
+  cursor: pointer;
   border-radius: 10px;
   margin: 0.2em;
+  color: #ffffff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.8px;
+
 }
 
 .btn:hover {
-  background: #ddd;
-  color: black;
+  background: #fff;
+  text-shadow: none;
+  color: #3498db;
+}
+.btn:focus {
+  background: #fff;
+  text-shadow: none;
+  color: #3498db;
+  outline: none;
 }
 
 .info {
@@ -140,7 +156,7 @@ h1 {
   transition: visibility 0s linear 0s, opacity 300ms;
 }
 #responseText {
-  height: 90%;
+  flex-grow: 2;
   overflow-y: scroll;
 }
 
@@ -158,34 +174,25 @@ h1 {
   width: 40%;
 }
 #responseButton {
-  flex-grow: 2;
   display: flex;
   flex-direction: column-reverse;
-  padding-bottom: 20px;
+  padding: 20px 0;
 }
-
-@media (orientation: landscape) {
-  .content {
-    position: fixed;
-    right: 0;
-    color: #f1f1f1;
-    width: 100vw;
-  }
-
-  .btn {
-    width: 200px;
-    font-size: 18px;
-    padding: 10px;
-    border: none;
-    background: #000;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 10px;
-    margin: 0.2em;
-  }
+#responseButton button {
+  height: 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #fff;
+  letter-spacing: 0.8px;
+  color: #3498db;
+  font-size: 0.8em;
+  letter-spacing: 0.8px;
+  cursor: pointer;
 }
 
 #infoButton {
+  visibility: hidden;
+  cursor: pointer;
   color: #3498db;
   position: fixed;
   background: white;
