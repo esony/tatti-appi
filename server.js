@@ -70,6 +70,7 @@ app.post('/upload', function(req, res) {
 		};
 
 		visualRecognition.classify(params, function(err, response) {
+			fs.unlinkSync(filePath);				
 			if (err) {
 				console.log(err);
 				res.status(err.code).send('Sorry, Watson has a problum')
@@ -86,7 +87,6 @@ app.post('/upload', function(req, res) {
 
 // Allow static files in /views and /img to be served
 app.use(express.static(__dirname + '/views'));
-app.use('/img', express.static(__dirname + '/img'));
 
 // Start listening on the port
 var server = app.listen(port, function() {
